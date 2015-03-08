@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app version="3.0"
+  xmlns="http://java.sun.com/xml/ns/javaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+ 
+
+ 
+   <servlet>
+      <servlet-name>Events</servlet-name>
+      <servlet-class>mypkg.AddEventServlet</servlet-class>     
+   </servlet>
+ 
+   <servlet>
+      <servlet-name>Search</servlet-name>
+      <servlet-class>mypkg.SearchServlet</servlet-class>     
+   </servlet>
+   
+   
+   <servlet>
+      <servlet-name>Login</servlet-name>
+      <servlet-class>mypkg.LoginServlet</servlet-class>     
+   </servlet>
+
+     <servlet>
+      <servlet-name>Logout</servlet-name>
+      <servlet-class>mypkg.LogOutServlet</servlet-class>     
+   </servlet>
+   
+    <servlet>
+      <servlet-name>SignUp</servlet-name>
+      <servlet-class>mypkg.SignUpServlet</servlet-class>     
+   </servlet>
+      
+    <servlet>
+      <servlet-name>Inbox</servlet-name>
+      <servlet-class>mypkg.InboxServlet</servlet-class>     
+   </servlet>
+   
+   <servlet>
+      <servlet-name>Messaging</servlet-name>
+      <servlet-class>mypkg.MessagingServlet</servlet-class>     
+   </servlet>
+   
+   <servlet>
+      <servlet-name>EventYouLike</servlet-name>
+      <servlet-class>mypkg.EventYouLikeServlet</servlet-class>     
+   </servlet>
+   
+   <servlet>
+      <servlet-name>YourEvents</servlet-name>
+      <servlet-class>mypkg.YourEventsServlet</servlet-class>     
+   </servlet>
+   
+    <servlet>
+      <servlet-name>Commenting</servlet-name>
+      <servlet-class>mypkg.CommentServlet</servlet-class>     
+   </servlet>
+   
+    <servlet>
+      <servlet-name>ViewComment</servlet-name>
+      <servlet-class>mypkg.ViewCommentServlet</servlet-class>     
+   </servlet>
+   
+    <servlet>
+      <servlet-name>Rate</servlet-name>
+      <servlet-class>mypkg.RateServlet</servlet-class>     
+   </servlet>
+   
+    <servlet>
+      <servlet-name>viewRate</servlet-name>
+      <servlet-class>mypkg.ViewRateServlet</servlet-class>     
+   </servlet>
+    <!-- mapping to: -->
+ 
+   <servlet-mapping>
+      <servlet-name>Events</servlet-name>
+      <url-pattern>/addEvent</url-pattern>
+   </servlet-mapping>
+
+
+   <servlet-mapping>
+      <servlet-name>Search</servlet-name>
+      <url-pattern>/search</url-pattern>
+   </servlet-mapping>
+
+ 
+   <servlet-mapping>
+	<servlet-name>Login</servlet-name>
+        <url-pattern>/login</url-pattern>
+   </servlet-mapping>
+   
+     <servlet-mapping>
+	<servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
+   </servlet-mapping>
+
+     <servlet-mapping>
+	<servlet-name>SignUp</servlet-name>
+        <url-pattern>/signup</url-pattern>
+   </servlet-mapping>
+   
+    <servlet-mapping>
+      <servlet-name>Inbox</servlet-name>
+      <url-pattern>/inbox</url-pattern>     
+    </servlet-mapping>
+   
+   <servlet-mapping>
+      <servlet-name>Messaging</servlet-name>
+      <url-pattern>/messaging</url-pattern>     
+   </servlet-mapping>
+   
+   <servlet-mapping>
+      <servlet-name>EventYouLike</servlet-name>
+      <url-pattern>/eventYouLike</url-pattern>     
+   </servlet-mapping>
+   
+   <servlet-mapping>
+      <servlet-name>YourEvents</servlet-name>
+      <url-pattern>/yourEvents</url-pattern>     
+   </servlet-mapping>
+   
+     <servlet-mapping>
+      <servlet-name>Commenting</servlet-name>
+      <url-pattern>/comment</url-pattern>     
+   </servlet-mapping>
+   
+   <servlet-mapping>
+      <servlet-name>ViewComment</servlet-name>
+      <url-pattern>/viewcomment</url-pattern>     
+   </servlet-mapping>
+   
+     <servlet-mapping>
+      <servlet-name>Rate</servlet-name>
+      <url-pattern>/rate</url-pattern>     
+   </servlet-mapping>
+
+ <servlet-mapping>
+      <servlet-name>viewRate</servlet-name>
+      <url-pattern>/viewRate</url-pattern>     
+   </servlet-mapping>
+</web-app>
