@@ -48,6 +48,9 @@ public class AddEventServlet extends HttpServlet {
         String sqlStr;
         ResultSet rset;  
            
+        Webparse wParse = new WebParse();
+        
+        
             String eventName = request.getParameter("eventName");
             String author = userName;
             String date = request.getParameter("date") ;

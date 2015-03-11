@@ -71,6 +71,11 @@
       <servlet-name>viewRate</servlet-name>
       <servlet-class>mypkg.ViewRateServlet</servlet-class>     
    </servlet>
+   
+    <servlet>
+      <servlet-name>UserInfo</servlet-name>
+      <servlet-class>mypkg.UserInfoServlet</servlet-class>     
+   </servlet>
     <!-- mapping to: -->
  
    <servlet-mapping>
@@ -138,5 +143,10 @@
  <servlet-mapping>
       <servlet-name>viewRate</servlet-name>
       <url-pattern>/viewRate</url-pattern>     
+   </servlet-mapping>
+   
+   <servlet-mapping>
+      <servlet-name>UserInfo</servlet-name>
+      <url-pattern>/userInfo</url-pattern>     
    </servlet-mapping>
 </web-app>

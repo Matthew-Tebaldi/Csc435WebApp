@@ -57,7 +57,7 @@ public class SignUpServlet extends HttpServlet {
             out.println("<p>Sorry, but that user name has already been taken. </p>");      
             
         } else {
-            sqlStr = "insert into users values('" + user + "', '" + pass + "', 0, 0, 0, 0, 0, 0, 0)";
+            sqlStr = "insert into users values('" + user + "', '" + pass + "', 0.0)";
             stmt.execute(sqlStr);  
             out.println("<p>You have been added into the system.</p>");
             out.println("<p>You must login now, to use this site.</p>");          
