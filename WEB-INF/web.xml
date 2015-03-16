@@ -4,7 +4,6 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
  
-
  
    <servlet>
       <servlet-name>Events</servlet-name>
@@ -76,7 +75,18 @@
       <servlet-name>UserInfo</servlet-name>
       <servlet-class>mypkg.UserInfoServlet</servlet-class>     
    </servlet>
-    <!-- mapping to: -->
+
+    <servlet>
+      <servlet-name>WebParse</servlet-name>
+      <servlet-class>mypkg.WebParseServlet</servlet-class>     
+    </servlet>
+
+    <servlet>
+      <servlet-name>RestSearch</servlet-name>
+      <servlet-class>mypkg.RestSearch</servlet-class>     
+    </servlet>
+
+   <!-- mapping to: -->
  
    <servlet-mapping>
       <servlet-name>Events</servlet-name>
@@ -134,7 +144,12 @@
       <servlet-name>ViewComment</servlet-name>
       <url-pattern>/viewcomment</url-pattern>     
    </servlet-mapping>
-   
+  
+   <servlet-mapping>
+	<servlet-name>RestSearch</servlet-name>
+	<url-pattern>/rest/search</url-pattern>
+   </servlet-mapping>
+ 
      <servlet-mapping>
       <servlet-name>Rate</servlet-name>
       <url-pattern>/rate</url-pattern>     
@@ -149,4 +164,56 @@
       <servlet-name>UserInfo</servlet-name>
       <url-pattern>/userInfo</url-pattern>     
    </servlet-mapping>
+   
+   <servlet-mapping>
+      <servlet-name>WebParse</servlet-name>
+      <url-pattern>/webParse</url-pattern>     
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>Twitter</servlet-name>
+      <servlet-class>mypkg.TwitterServlet</servlet-class>     
+   </servlet>
+   
+    
+   <servlet-mapping>
+      <servlet-name>Twitter</servlet-name>
+      <url-pattern>/twitter</url-pattern>     
+   </servlet-mapping>
+   
+   <servlet>
+      <servlet-name>GetEvents</servlet-name>
+      <servlet-class>mypkg.GetEventsServlet</servlet-class>     
+   </servlet>
+   
+    
+   <servlet-mapping>
+      <servlet-name>GetEvents</servlet-name>
+      <url-pattern>/getEvents</url-pattern>     
+   </servlet-mapping>
+   
+    <servlet>
+      <servlet-name>RestMessage</servlet-name>
+      <servlet-class>mypkg.RestMessage</servlet-class>     
+   </servlet>
+   
+    
+   <servlet-mapping>
+      <servlet-name>RestMessage</servlet-name>
+      <url-pattern>/rest/message</url-pattern>     
+   </servlet-mapping>
+   
+   
+    <servlet>
+      <servlet-name>RestGetEvents</servlet-name>
+      <servlet-class>mypkg.RestGetEvents</servlet-class>     
+   </servlet>
+   
+    
+   <servlet-mapping>
+      <servlet-name>RestGetEvents</servlet-name>
+      <url-pattern>/rest/getEvents</url-pattern>     
+   </servlet-mapping>
+   
+   
 </web-app>

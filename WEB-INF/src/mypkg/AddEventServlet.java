@@ -6,8 +6,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.conf.ConfigurationBuilder;
  
 public class AddEventServlet extends HttpServlet {
 
@@ -37,20 +43,11 @@ public class AddEventServlet extends HttpServlet {
         
         conn = DriverManager.getConnection("jdbc:mysql://localhost/csc435WebApp", "myuser", "xxxx");
         stmt = conn.createStatement();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-        out.println("<title>Add</title>");
-        out.println("</head>");
-        out.println("<body style=background-color:green>");     
-  
+      
         String sqlStr;
         ResultSet rset;  
            
-        Webparse wParse = new WebParse();
-        
-        
+     
             String eventName = request.getParameter("eventName");
             String author = userName;
             String date = request.getParameter("date") ;
@@ -72,23 +69,37 @@ public class AddEventServlet extends HttpServlet {
         }
     
         if(alreadyAnEvent){
-            out.println("<p> Sorry, there is already an event with that name.</p>");
+            request.setAttribute("addFailed", true);
+            RequestDispatcher rqds = request.getRequestDispatcher("/addEvent.jsp");
+            rqds.forward(request, response);
         } else{
             sqlStr = "insert events values ('" + eventName + "', '" + author 
                     + "', '" + date +"', '" + time + "', '" + description 
                     + "', '" + tag + "' )"; 
-            stmt.executeUpdate(sqlStr);            
-            RequestDispatcher rqds = request.getRequestDispatcher("/eventYouLike");
+            stmt.executeUpdate(sqlStr);    
+            
+        ConfigurationBuilder cb = new ConfigurationBuilder();
+        cb.setOAuthConsumerKey("pexFcxIUSMEicTUDt7Na20zJN");
+        cb.setOAuthConsumerSecret("ztsBEk8babKF6tHmpwMyNx3Qz1ZnKlZB6O0gXsr5zwwVx9a8Fn");
+        cb.setOAuthAccessToken("3084799437-B6zCeIuPv3gXx1apgktSOIBkbpWcxfQJc2Qo4Ax");
+        cb.setOAuthAccessTokenSecret("QYrMEFeBY4yxYk1a7CCXVcNm1UReCYaBLd4cvovGItzIT");
+    
+   
+        TwitterFactory tf = new TwitterFactory(cb.build());
+        Twitter twitter = tf.getInstance();
+            
+            twitter.updateStatus(eventName + " is going to be going on at this time: " + time );
+            RequestDispatcher rqds = request.getRequestDispatcher("/twitter");
             rqds.forward(request, response);
         }
         
     
-        out.println("<p><a href='/csc435WebApp/addEvent.jsp'>home</a></p>");
-        out.println("</body></html>");
      
     } catch (SQLException ex) {
         ex.printStackTrace();
-    } finally {
+    }   catch (TwitterException ex) {
+            Logger.getLogger(AddEventServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
         out.close();  
         try {        
             if (stmt != null) stmt.close();

@@ -35,22 +35,10 @@ public class RateServlet extends HttpServlet {
         String eventName = (String)session.getAttribute("eventName");
         String rate = request.getParameter("rating");
         Integer intRate = Integer.parseInt(rate);
-        
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-        out.println("<title>comments</title>");
-        out.println("</head>");
-        out.println("<body style=background-color:green>");     
-     
-      out.println("<p> hi </p>");
-     
+
         sqlStr = "select * from rateTable";
         rset = stmt.executeQuery(sqlStr);
-          
-        
-    
+ 
         int i = 1; 
         Boolean alreadyRated = false;
         while(rset.next()){        
@@ -65,10 +53,9 @@ public class RateServlet extends HttpServlet {
         String tag = null;
         
         if(alreadyRated){
-            
-             out.println("<p> Sorry but you already rated the event</p>");
-               out.println("<p><a href='/csc435WebApp/eventYouLike'>home</a></p>");
-             out.println("</body></html>");
+            request.setAttribute("alreadyRated", true);
+            RequestDispatcher rqds = request.getRequestDispatcher("/rateJsp.jsp");
+            rqds.forward(request, response);
         }else{
             sqlStr = "select tag from events where name = '" + eventName + "'";
             rset = stmt.executeQuery(sqlStr);

@@ -40,7 +40,7 @@ public class SignUpServlet extends HttpServlet {
         out.println("<title>SignUP</title>");
         out.println("</head>");
         out.println("<body style=background-color:green>");     
-                 
+                
 //See if the user exists
         String sqlStr = "select name from users where name = '" + user + "'";
         ResultSet rset = stmt.executeQuery(sqlStr);  
@@ -52,15 +52,20 @@ public class SignUpServlet extends HttpServlet {
                 break;
             }
         }  
-          
+         
         if(inDatabase){
-            out.println("<p>Sorry, but that user name has already been taken. </p>");      
+           request.setAttribute("logCheck", "userNameTaken");
+         	RequestDispatcher rqds = request.getRequestDispatcher("/loginJsp.jsp");
+         	rqds.forward(request, response);
             
         } else {
             sqlStr = "insert into users values('" + user + "', '" + pass + "', 0.0)";
             stmt.execute(sqlStr);  
-            out.println("<p>You have been added into the system.</p>");
-            out.println("<p>You must login now, to use this site.</p>");          
+                 
+                request.setAttribute("logCheck", "signedUp");
+         	RequestDispatcher rqds = request.getRequestDispatcher("/loginJsp.jsp");
+         	rqds.forward(request, response);
+               
         }
             out.println("<p><a href='/csc435WebApp'>home</a></p>");
             out.println("</body></html>");                      

@@ -34,15 +34,8 @@ public class LoginServlet extends HttpServlet {
         
         conn = DriverManager.getConnection("jdbc:mysql://localhost/csc435WebApp", "myuser", "xxxx");
         stmt = conn.createStatement();
-       
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-        out.println("<title>input</title>");
-        out.println("</head>");
-        out.println("<body style=background-color:green>");
-      
+   
+        
 //See if the user exists
         String sqlStr = "select name from users where name = '" + login + "'";
         ResultSet rset = stmt.executeQuery(sqlStr);  
@@ -55,8 +48,10 @@ public class LoginServlet extends HttpServlet {
             }
         }  
         if(!inDatabase){
-		out.println("<p> Your name was not found. Maybe you should try signing up. </p>");
-            	out.println("<p><a href='/csc435WebApp'>home</a></p>");
+             request.setAttribute("logCheck", "loginNameNotFound");
+         	RequestDispatcher rqds = request.getRequestDispatcher("/loginJsp.jsp");
+         	rqds.forward(request, response);
+		
          } else { 
 
 //check to see if password matches        
@@ -67,15 +62,18 @@ public class LoginServlet extends HttpServlet {
             if(rset.getString("password").equals(pass)){       
                
                 session.setAttribute("userName", login);
-         	RequestDispatcher rqds = request.getRequestDispatcher("/eventYouLike");
+                request.setAttribute("logCheck", "loggedIn");
+         	RequestDispatcher rqds = request.getRequestDispatcher("/loginJsp.jsp");
          	rqds.forward(request, response);
             } else {
-                out.println("<p>Wrong password</p>");
-                out.println("<p><a href='/csc435WebApp'>home</a></p>");
+                request.setAttribute("logCheck", "wrongPass");
+         	RequestDispatcher rqds = request.getRequestDispatcher("/loginJsp.jsp");
+         	rqds.forward(request, response);
+              
             } 
 	}
         } 
-        out.println("</body></html>");           
+        
         
     } catch (SQLException ex) {
         ex.printStackTrace();

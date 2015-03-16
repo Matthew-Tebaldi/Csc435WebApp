@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
@@ -55,8 +56,12 @@
 
    <form style="float:left; color:black" method="get" action="logout">                      
          <input type="submit" value="logout" />                        
-   </form>   
-
+   </form>
+    
+     <form style="float: left" method="get" action="getEvents">
+        <input type="submit" value="All Events">
+    </form>
+   
    <form style="float:right; color: black; font-size: small" method="get" action="search">              
         Search for an Event: <textarea  rows="1" cols="30" name="searchEvent"></textarea>                    
         <input type="submit" value="Search" />                   
@@ -68,62 +73,38 @@
    <br />
    <br />
     
-<section style="background-color: white; float:left; text-align: center">
+<section style="background-color: white; column-count:3; text-align: center">
    
     <h1> Here is an event You might Like: </h1>        
-        <p>            
-            Event: <%=  request.getAttribute("name")%>
-            <br />
-            Date: <%=  request.getAttribute("date")%>
-            <br />     
-            Time: <%=  request.getAttribute("time")%>
-            <br />
-            Created by:<%=   request.getAttribute("author")%>        
-        </p> 
-        
-	<br /> 
-        <br />
-        
-        <p style="margin:10px"> This has been rated: </p>   
-      
-        <iframe src="/csc435WebApp/viewRate"  width="30" height="30"></iframe>
-        <br /> 
-        <br /> 
-        Description:
-        <p style="padding:10px">      
-            
-            <%= request.getAttribute("description")%>
-        </p>
-      
-        <form method="get" action="rate" style="background-color:white">
-            <input type="radio" name="rating"  value="1" >1
-            <input type="radio" name="rating"  value="2" >2
-            <input type="radio" name="rating"  value="3" >3
-            <input type="radio" name="rating"  value="4" >4
-            <input type="radio" name="rating"  value="5" >5
-        <br /> 
-        <br />
-        <input type="submit" value="rate">      
-        </form>    
-        
-        <br />
-        <br />
-        
-        <form style="background-color:white; " method="get" action="comment">               
-        <fieldset>
-            <legend>Leave a Comment: </legend>
-            <textarea rows="10" cols="50" name="userComment"></textarea>
-        </fieldset>
-   
-        <input  type="submit" value="Comment!" >                      
-        </form>      
-         
-        <br />
-        <br />
-        <p> here are the comments: </p>       
-            <iframe src="/csc435WebApp/viewcomment"  width="500" height="300"></iframe> 
+    
+    <% String eName = (String) request.getAttribute("eName"); %>
+    <% if(eName==null){%>
+    <p> We don't have enough events, help us out by adding an event! </p>
+    <% } else { %>  
+    We have came up with this event for you:
+    <form method="get" action="search">
+    <textarea rows="1" cols="30" name="searchEvent"><%=eName%></textarea>
+    <br/>
+    <input type="submit" value="Go to event" />  
+    </form>
+    <%}%>
+    
 </section>
+    <hr>
+    
+<section style="background-color: white; column-count:3; text-align: center">
+    <h> Here are tweets from Suny Oswego: </h>
+    <br/><br/><br/>
+    <% String[] tweets = (String[])request.getAttribute("tweets");%> 
+        <%for(int i=0; i< 20; i++){
+        if(tweets[i]!=null){%>  <%=tweets[i]%>
+    <br/><br/>
+    <%
+            
+    }}%>
       
+</section>
+     
 <section>
 	<form style="background-color:white; padding:20px; float:right" method="get" action="messaging">
         	<fieldset>  

@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<% Boolean addFail = false; %>
+<% if(request.getAttribute("addFailed")!=null){
+    addFail = (Boolean) request.getAttribute("addFailed");
+} %>
+     
 <html>
 <head>
   <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
@@ -44,16 +49,18 @@
 <h1>Add an events</h1>
 
 <h2>
-    <form method="post" action="eventYouLike">
-        <input type="submit" value="Home">
-    </form>
+    <a href='/csc435WebApp/twitter'>Home</a>
     
 </h2>
 </header>
 
       
 <section style="float:left">
-        
+      
+    <% if(addFail){ %>
+      <p>There is already an event with that name. Try a different name.</p>
+    <%}%>
+    
     <form style="background-color:white; padding:20px; width:700px" method="get" action="addEvent">
         <fieldset style="padding:10px">
         <legend>Add Event</legend>

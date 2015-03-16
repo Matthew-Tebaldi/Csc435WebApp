@@ -228,23 +228,15 @@ public class EventYouLikeServlet extends HttpServlet {
             if(loopCount!=count){
                loopCount++;
             } else {
-                date = rset.getString("date");
-                time = rset.getString("time");
+               
                 eName = rset.getString("name");
-                author = rset.getString("author");
-                description = rset.getString("description");
+               
             }
             
         }
          
-	session.setAttribute("eventName", eName); 
-        request.setAttribute("name", eName);
-        request.setAttribute("date", date);
-        request.setAttribute("time", time);
-        request.setAttribute("author", author);
-        request.setAttribute("description", description);
-    
-             
+	
+        request.setAttribute("eName", eName);                  
         RequestDispatcher rqds = request.getRequestDispatcher("/eventHome.jsp");
         rqds.forward(request, response);
            

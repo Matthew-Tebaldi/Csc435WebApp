@@ -27,19 +27,10 @@ public class LogOutServlet extends HttpServlet {
 	conn = DriverManager.getConnection("jdbc:mysql://localhost/csc435WebApp", "myuser", "xxxx");
 	stmt = conn.createStatement();
 
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-        out.println("<title>Logout</title>");
-        out.println("</head>");
-        out.println("<body style=background-color:green>");     
-       
 	String sqlStr;
-	ResultSet rset;
 	String userName = (String) session.getAttribute("userName");
  
-        session.setAttribute("userName", " ");
+       
 	long start = session.getCreationTime();
         long end = session.getLastAccessedTime();
         double total = end - start;       
@@ -47,10 +38,12 @@ public class LogOutServlet extends HttpServlet {
         sqlStr = "update users SET time = time + " + total + " where name = '" + userName + "'";
         stmt.execute(sqlStr);
         
-	session.invalidate();    
-        out.println("<h3>You have been logged out.</h3>");       
-        out.println("<p><a href='/csc435WebApp'>home</a></p>");               
-        out.println("</body></html>");                     
+	session.invalidate();  
+        
+      
+        RequestDispatcher rqds = request.getRequestDispatcher("/webParse");
+        rqds.forward(request, response);    
+        
     } catch (SQLException ex){
 	ex.printStackTrace();
     } finally {

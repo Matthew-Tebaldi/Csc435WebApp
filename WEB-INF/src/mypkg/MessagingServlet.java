@@ -4,7 +4,7 @@ import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.sql.*;
-import java.util.Enumeration;
+
 
 public class MessagingServlet extends HttpServlet {
  
@@ -31,13 +31,7 @@ public class MessagingServlet extends HttpServlet {
         
         conn = DriverManager.getConnection("jdbc:mysql://localhost/csc435WebApp", "myuser", "xxxx");
         stmt = conn.createStatement();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-        out.println("<title>Messages</title>");
-        out.println("</head>");
-        out.println("<body style=background-color:green>");     
+   
   
 	String userName = (String) session.getAttribute("userName");
         String sqlStr;
@@ -60,15 +54,16 @@ public class MessagingServlet extends HttpServlet {
         }  
           
         if(!inDatabase){
-            out.println("<p>Sorry, we can't find that username.</p>");  
-            out.println("<p><a href='/csc435WebApp/eventYouLike'>home</a></p>");
-            out.println("</body></html>");
+            request.setAttribute("messaging", "usernameNotFound");
+            RequestDispatcher rqds = request.getRequestDispatcher("/messagingJsp.jsp");
+            rqds.forward(request, response);
+           
         } else {
             sqlStr = "insert messaging values ('" + author + "', '" + body + "', '" + user + "' )";
             stmt.executeUpdate(sqlStr); 
-            out.println("<p> Your message has been sent</p>");
-            out.println("<p><a href='/csc435WebApp/eventYouLike'>home</a></p>");
-            out.println("</body></html>");
+            request.setAttribute("messaging", "sent");
+            RequestDispatcher rqds = request.getRequestDispatcher("/messagingJsp.jsp");
+            rqds.forward(request, response);
         }
         
         

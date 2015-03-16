@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Enumeration;
 import javax.servlet.*;
 import javax.servlet.http.*;
  
@@ -36,14 +35,7 @@ public class SearchServlet extends HttpServlet {
         
         conn = DriverManager.getConnection("jdbc:mysql://localhost/csc435WebApp", "myuser", "xxxx");
         stmt = conn.createStatement();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>");
-        out.println("<title>search</title>");
-        out.println("</head>");
-        out.println("<body style=background-color:green>");     
-  
+       
         String sqlStr;
         ResultSet rset;  
         
@@ -70,21 +62,80 @@ public class SearchServlet extends HttpServlet {
         }
        
         if(!foundEvent){
-             out.println("<p> Event Not Found! Try again</p>");
-               out.println("<p><a href='/csc435WebApp/eventYouLike'>home</a></p>");
+            request.setAttribute("eventNotFound", true);
+            RequestDispatcher rqds = request.getRequestDispatcher("/search.jsp");
+            rqds.forward(request, response);
         } else{
-         
+            
+   //event info      
         session.setAttribute("eventName", eventName);
         request.setAttribute("date", date);
         request.setAttribute("time", time);
         request.setAttribute("author", author);
         request.setAttribute("description", description);
-          
+         
+    //get rating
+        out.println(eventName);
+        sqlStr = "select * from rateTable";
+        rset = stmt.executeQuery(sqlStr);          
+        Boolean contains=false;
+            
+        while(rset.next()){
+            if(rset.getString("event").equals(eventName)){
+                contains = true;
+            }
+        }
+        
+        if(contains){
+        sqlStr = "select * from rateTable where event = '"+ eventName +"'";
+        rset = stmt.executeQuery(sqlStr);          
+    
+        String[] rList = new String[100];
+        
+        int i = 0;
+            
+        while(rset.next()){
+            rList[i] = rset.getString("rate");        
+            i++;     
+        }
+        int total = 0;
+        int count = 0;
+        for (i = 0; i < 100; i++) {         
+            if(rList[i]!=null){
+                Integer rate = Integer.parseInt(rList[i]);               
+                total = total + rate; 
+                count++;
+                } 
+            }
+        int avr = total/count;
+         
+        request.setAttribute("eRateAvr", avr); 
+        } else { request.setAttribute("eRateAvr", 0); }
+    
+   // getting comments     
+         sqlStr = "select * from commentTable where event = '"+ eventName +"'";
+     
+        rset = stmt.executeQuery(sqlStr);
+           
+        String[] cList = new String[100];
+        String[] aList = new String[100];
+        int j = 0;
+      
+        while(rset.next()){
+            cList[j] = rset.getString("comments"); 
+            aList[j] = rset.getString("author");
+            j++; 
+        }     
+        request.setAttribute("cList", cList);
+        request.setAttribute("aList", aList);
+        
+        
+     //forwarding   
          RequestDispatcher rqds = request.getRequestDispatcher("/search.jsp");
          rqds.forward(request, response);
        
         }       
-        out.println("</body></html>");
+       
      
     } catch (SQLException ex) {
         ex.printStackTrace();
